@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:meta/meta.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:flutter_mvvm_starter/model/apis/app_exception.dart';
 import 'package:flutter_mvvm_starter/model/services/base_service.dart';
+import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
 class MediaService extends BaseService {
   @override
@@ -33,7 +33,7 @@ class MediaService extends BaseService {
       case 500:
       default:
         throw FetchDataException(
-            'Error occured while communication with server' +
+            'Error occurred while communication with server' +
                 ' with status code : ${response.statusCode}');
     }
   }

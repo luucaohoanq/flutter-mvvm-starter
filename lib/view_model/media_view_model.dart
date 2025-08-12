@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_mvvm_starter/model/apis/api_response.dart';
 import 'package:flutter_mvvm_starter/model/media.dart';
 import 'package:flutter_mvvm_starter/model/media_repository.dart';
@@ -26,7 +26,9 @@ class MediaViewModel with ChangeNotifier {
       _apiResponse = ApiResponse.completed(mediaList);
     } catch (e) {
       _apiResponse = ApiResponse.error(e.toString());
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
     notifyListeners();
   }

@@ -4,17 +4,16 @@ import 'package:flutter_mvvm_starter/model/media.dart';
 import 'package:flutter_mvvm_starter/view/widgets/player_list_widget.dart';
 import 'package:flutter_mvvm_starter/view/widgets/player_widget.dart';
 import 'package:flutter_mvvm_starter/view_model/media_view_model.dart';
-
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   Widget getMediaWidget(BuildContext context, ApiResponse apiResponse) {
     List<Media>? mediaList = apiResponse.data as List<Media>?;
     switch (apiResponse.status) {
@@ -27,8 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               flex: 8,
               child: PlayerListWidget(mediaList!, (Media media) {
-                Provider.of<MediaViewModel>(context, listen: false)
-                .setSelectedMedia(media);
+                Provider.of<MediaViewModel>(
+                  context,
+                  listen: false,
+                ).setSelectedMedia(media);
               }),
             ),
             Expanded(
@@ -45,25 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         );
       case Status.ERROR:
-        return Center(
-          child: Text('Please try again latter!!!'),
-        );
+        return Center(child: Text('Please try again latter!!!'));
       case Status.INITIAL:
-      default:
-        return Center(
-          child: Text('Search the song by Artist'),
-        );
+      return Center(child: Text('Search the song by Artist'));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final _inputController = TextEditingController();
+    final inputController = TextEditingController();
     ApiResponse apiResponse = Provider.of<MediaViewModel>(context).response;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Media Player'),
-      ),
+      appBar: AppBar(title: Text('Media Player')),
       body: Column(
         children: <Widget>[
           Padding(
@@ -74,34 +68,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20.0),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary.withAlpha(50),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.secondary.withAlpha(50),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                     child: TextField(
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          color: Colors.grey,
-                        ),
-                        controller: _inputController,
-                        onChanged: (value) {},
-                        onSubmitted: (value) {
-                          if (value.isNotEmpty) {
-                            Provider.of<MediaViewModel>(context, listen: false)
-                                .setSelectedMedia(null);
-                            Provider.of<MediaViewModel>(context, listen: false)
-                                .fetchMediaData(value);
-                          }
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.grey,
-                          ),
-                          hintText: 'Enter Artist Name',
-                        )),
+                      style: TextStyle(fontSize: 15.0, color: Colors.grey),
+                      controller: inputController,
+                      onChanged: (value) {},
+                      onSubmitted: (value) {
+                        if (value.isNotEmpty) {
+                          Provider.of<MediaViewModel>(
+                            context,
+                            listen: false,
+                          ).setSelectedMedia(null);
+                          Provider.of<MediaViewModel>(
+                            context,
+                            listen: false,
+                          ).fetchMediaData(value);
+                        }
+                      },
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        prefixIcon: Icon(Icons.search, color: Colors.grey),
+                        hintText: 'Enter Artist Name',
+                      ),
+                    ),
                   ),
                 ),
               ],

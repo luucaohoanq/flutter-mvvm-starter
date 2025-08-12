@@ -10,19 +10,19 @@ class PlayerListWidget extends StatefulWidget {
   const PlayerListWidget(this._mediaList, this._function, {super.key});
 
   @override
-  _PlayerListWidgetState createState() => _PlayerListWidgetState();
+  State<PlayerListWidget> createState() => _PlayerListWidgetState();
 }
 
 class _PlayerListWidgetState extends State<PlayerListWidget> {
   Widget _buildSongItem(Media media) {
-    Media? _selectedMedia = Provider.of<MediaViewModel>(context).media;
+    Media? selectedMedia = Provider.of<MediaViewModel>(context).media;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: Row(
         children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
-            child: Container(
+            child: SizedBox(
               width: 50,
               height: 50,
               child: Image.network(media.artworkUrl ?? ''),
@@ -70,8 +70,8 @@ class _PlayerListWidgetState extends State<PlayerListWidget> {
                   ),
                 ]),
           ),
-          if (_selectedMedia != null &&
-              _selectedMedia.trackName == media.trackName)
+          if (selectedMedia != null &&
+              selectedMedia.trackName == media.trackName)
             Icon(
               Icons.play_circle_outline,
               color: Theme.of(context).primaryColor,

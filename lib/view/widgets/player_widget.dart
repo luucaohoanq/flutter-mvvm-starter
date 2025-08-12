@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_starter/model/media.dart';
 import 'package:flutter_mvvm_starter/view_model/media_view_model.dart';
